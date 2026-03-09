@@ -1,3 +1,6 @@
 comms.json
 .comms/
 *.tmp.*
+slack-message.html
+demo/demo.webm
+demo/demo-output.txt
