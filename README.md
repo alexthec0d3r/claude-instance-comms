@@ -62,6 +62,34 @@ Pick your most accessible machine as the **hub**. It holds a `.comms/` directory
 
 Nodes talk to the hub over SSH (or locally if they're on the same machine). That's the entire transport layer.
 
+## Why Would You Want This?
+
+### The YOLO Sandbox
+Your laptop instance is buttoned-up — no `sudo`, no `--force`, no `rm -rf` anything. But your server instance? Full permissions, YOLO mode, running in a throwaway VM you don't care about. You send it the scary commands from the safety of your couch. Mission control doesn't ride the rocket.
+
+### The Overnight Forge
+It's 11pm and you need to migrate a 200-table database, run the full test suite, and regenerate API docs. Fire off the task to your beefy server instance, close your laptop, go to bed. In the morning, your laptop instance checks the inbox: *"Migration complete. 847 tests passing. 3 deprecation warnings. Docs pushed to staging."* Coffee tastes better when the work's already done.
+
+### The Split-Brain Monorepo
+Frontend lives on your MacBook where you can eyeball it in a browser. Backend lives on your Linux server where Docker and Postgres actually run well. Two instances, each an expert in their half, passing API contract changes back and forth like notes in class. *"Hey, I added a `cursor` field to `/api/users` — update your fetch calls."*
+
+### The CI Informant
+Your CI pipeline spins up an agent that runs the test suite, and when something breaks, it doesn't just post a cryptic red badge — it sends your dev instance the full failure context, the relevant diff, and a suggested fix. You walk back to your desk and your agent says *"CI caught a null pointer in `OrderService.validate()`. I've got a patch ready."*
+
+### The Specialist Bench
+One instance is your infrastructure brain — lives on the server, knows your cloud setup cold. Another is your code instance on your laptop. When you say "we need a Redis cache," your laptop instance writes the application code and asks the infra instance to provision the actual Redis, update security groups, and send back the connection string. Two experts, one conversation.
+
+### The Paranoid Deployment
+Your staging instance verifies the build, runs smoke tests, checks for environment drift. Only when it reports "all clear" does your prod instance — locked behind SSH keys on a hardened box — actually deploy. No human fat-fingers the deploy. No single agent has both "test" and "deploy" permissions. Separation of concerns, enforced by physics.
+
+### The GPU Loan Shark
+You're iterating on a training script on your laptop, but training needs 80GB of VRAM on a server two rooms over. Your laptop instance sends the config, the GPU server kicks off the run, streams back loss curves. You keep editing locally while the expensive hardware does the sweating. When training diverges, the server pings you immediately instead of burning tokens for three more hours.
+
+### The Buddy System
+Two devs on a team, each with their own Claude Code instance. Dev A's instance is refactoring auth; Dev B's is building a feature that depends on it. Instead of Slack messages and "hey, are you done yet?" — their agents coordinate directly. B's instance gets: *"Auth refactor landed. `authenticate()` now returns `Result<Session>` instead of throwing. Here's the new type signature."* B's code updates before the human even notices.
+
+---
+
 ## Quick Start
 
 ### Option 1: Claude Code Plugin
